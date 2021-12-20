@@ -102,6 +102,8 @@ function API () {
 					reject(error);
 				}
 				if (!response.body) console.log(response);
+				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
+				console.log(time);
 				resolve([response.body.offerList, time]);
 			});
 		})
@@ -135,6 +137,7 @@ function API () {
 				if (error) reject(error);
 				if (response.statusCode === 200) offer["result"] = true;
 				else offer["result"] = false;
+				console.log(response.body);
 				offer.time = (date2 - date1) / 1000;
 				resolve(offer);
 			});
