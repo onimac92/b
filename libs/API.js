@@ -97,11 +97,8 @@ function API () {
 			request(options, (error, response) => {
 				var date2 = new Date().getTime();
 				var time  = (date2 - date1) / 1000;
-				if (error) {
-					console.error(error);
-					reject(error);
-				}
-				if (!response.body) console.log(response);
+				if (error) reject(error);
+				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
 				console.log(time);
 				resolve([response.body.offerList, time]);
@@ -135,6 +132,7 @@ function API () {
 			request(options, (error, response) => {
 				var date2 = new Date().getTime();
 				if (error) reject(error);
+				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (response.statusCode === 200) offer["result"] = true;
 				else offer["result"] = false;
 				console.log(response.body);

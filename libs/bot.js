@@ -176,7 +176,7 @@ function Bot() {
 			})
 		} catch (err) {
 			switch (err) {
-				case '{"message":"Rate exceeded"}':
+				case 'Rate exceeded':
 					populateEvent('overRateDetected')
 					TaskManager.after(SETTINGS.pauseTimeout * 60 * 1000).every(this._intervalTime).schedule('search-for-blocks', workflow2.bind(this))
 					break
