@@ -95,9 +95,15 @@ function API () {
 		var date1 = new Date().getTime();
 		return new Promise((resolve, reject) => {
 			request(options, (error, response) => {
+				console.log("#1");
+				console.log(typeof(response));
+				console.log("#2");
+				console.log(typeof(response.body));
+				console.log("#3");
 				var date2 = new Date().getTime();
 				var time  = (date2 - date1) / 1000;
 				if (error) reject(error);
+				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
 				console.log(time);
@@ -108,6 +114,8 @@ function API () {
 
 
 	self.acceptOffer = function (accessToken, offer, versionRabbit) {
+		console.log(offer);
+
 		var userAgentRabbit = userAgent.replace(/\).*/gi, `) RabbitAndroid/${versionRabbit}`);
 
 		var options = {
@@ -132,6 +140,7 @@ function API () {
 			request(options, (error, response) => {
 				var date2 = new Date().getTime();
 				if (error) reject(error);
+				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (response.statusCode === 200) offer["result"] = true;
 				else offer["result"] = false;
