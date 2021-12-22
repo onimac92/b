@@ -70,6 +70,7 @@ bot.registerEvent('acceptOfferSuccess', async(offer) => {
     }).then(message => {
         log.push(`Success SMS`);
     }).catch(error => {
+        console.log(error)
         log.push(`Error SMS`);
     })
 
