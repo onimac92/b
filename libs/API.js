@@ -69,8 +69,8 @@ function API () {
 	};
 
 	self.lookingForOffers = function (accessToken, serviceAreaId, versionRabbit) {
+		console.log("lookingForOffers");
 		var userAgentRabbit = userAgent.replace(/\).*/gi, `) RabbitAndroid/${versionRabbit}`);
-
 		var options = {
 			'json': true,
 			'method': 'POST',
@@ -104,11 +104,11 @@ function API () {
 				*/
 				var date2 = new Date().getTime();
 				var time  = (date2 - date1) / 1000;
+				console.log(time);
 				if (error) reject(error);
 				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
-				console.log(time);
 				resolve([response.body.offerList, time]);
 			});
 		})
