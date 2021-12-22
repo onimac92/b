@@ -140,7 +140,9 @@ function Bot() {
 			var d1 = new Date().getTime();
 			const offers = await this._API.lookingForOffers(self._accessToken, self._eligibleServiceArea, self._versionRabbit)
 			var d2 = new Date().getTime();
-			populateEvent ("requestBlock", offers, offers[1])
+			populateEvent ("requestBlock", offers, offers[1]);
+
+			/*
 			const filteredOffers = offers[0].filter((offer) => {
 				if (filterOfferByStation(offer)
 					|| filterOfferByPreferedTime(offer)
@@ -153,11 +155,12 @@ function Bot() {
 				}
 			})
 			if (filteredOffers.length > 0) {
-				/*Pause 3s for accepting offers*/
+				//Pause 3s for accepting offers
 				TaskManager.after(3 * 1000).every(this._intervalTime).schedule('search-for-blocks', workflow2.bind(this))
 			}
+			
 			filteredOffers.forEach((offer) => {
-				/* Avoid use async await to tweak performance */
+				//Avoid use async await to tweak performance
 				var d3 = new Date().getTime();
 				self._API.acceptOffer(self._accessToken, offer, self._versionRabbit).then(({ result }) => {
 					var d4 = new Date().getTime();
@@ -174,11 +177,13 @@ function Bot() {
 					self.catchError2(err)
 				})
 			})
+			*/
 		} catch (err) {
 			switch (err) {
 				case 'Rate exceeded':
-					populateEvent('overRateDetected')
-					TaskManager.after(SETTINGS.pauseTimeout * 60 * 1000).every(this._intervalTime).schedule('search-for-blocks', workflow2.bind(this))
+					populateEvent('overRateDetected');
+					self.stop2();
+					//TaskManager.after(SETTINGS.pauseTimeout * 60 * 1000).every(this._intervalTime).schedule('search-for-blocks', workflow2.bind(this))
 					break
 				default:
 					self.catchError2(err)

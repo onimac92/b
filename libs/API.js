@@ -28,8 +28,7 @@ function API () {
 			'url': self._eligibleServiceAreasUrl,
 			'headers': {
 				'User-Agent': userAgent,
-				'x-amz-access-token': accessToken,
-				'Content-Type': 'application/json'
+				'x-amz-access-token': accessToken
 			}
 		};
 
@@ -69,7 +68,7 @@ function API () {
 	};
 
 	self.lookingForOffers = function (accessToken, serviceAreaId, versionRabbit) {
-		console.log("lookingForOffers");
+		//console.log("lookingForOffers");
 		var userAgentRabbit = userAgent.replace(/\).*/gi, `) RabbitAndroid/${versionRabbit}`);
 		var options = {
 			'json': true,
@@ -77,8 +76,7 @@ function API () {
 			'url': self._offersUrl,
 			'headers': {
 				'User-Agent': userAgentRabbit,
-				'x-amz-access-token': accessToken,
-				'Content-Type': 'application/json'
+				'x-amz-access-token': accessToken
 			},
 			'body': {
 				'serviceAreaIds': [serviceAreaId],
@@ -104,11 +102,12 @@ function API () {
 				*/
 				var date2 = new Date().getTime();
 				var time  = (date2 - date1) / 1000;
-				console.log(time);
+				//console.log(time);
 				if (error) reject(error);
 				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
+				console.log(`${time} - ${response.body.offerList.length}`);
 				resolve([response.body.offerList, time]);
 			});
 		})
@@ -126,8 +125,7 @@ function API () {
 			'url': self._acceptOfferUrl,
 			'headers': {
 				'User-Agent': userAgentRabbit,
-				'x-amz-access-token': accessToken,
-				'Content-Type': 'application/json'
+				'x-amz-access-token': accessToken
 			},
 			'body': {
 				'__type': 'AcceptOfferInput:http://internal.amazon.com/coral/com.amazon.omwbuseyservice.offers/',
@@ -162,8 +160,7 @@ function API () {
 			'url': self._acceptedOffersUrl,
 			'headers': {
 				'User-Agent': userAgentRabbit,
-				'x-amz-access-token': accessToken,
-				'Content-Type': 'application/json'
+				'x-amz-access-token': accessToken
 			}
 		};
 
@@ -190,8 +187,7 @@ function API () {
 			'url': self._deleteOfferUrl + id,
 			'headers': {
 				'User-Agent': userAgentRabbit,
-				'x-amz-access-token': accessToken,
-				'Content-Type': 'application/json'
+				'x-amz-access-token': accessToken
 			}
 		};
 
@@ -234,7 +230,7 @@ function API () {
 			'method': 'POST',
 			'url': "https://api.amazon.com/auth/token",
 			'body': {
-				'source_token': 'Atnr|EwICIJtEEOOORFiLkPtrqkjLQumKMc4Z0kNKAUrKyvsyk03hGRz1S5qF6yL3cYvE-rHccYDQ5JYB7sX6DH-8hkk-0xEoHGFyIrCIzZOvelzrddZqsfLYB7v4qgh8m6_-ggreazs6KF_sevsE1XE8BLto7a50X5JVejntbpqHI_jrGuqzYWdNz4VR-28h9e1QnmRW3oMBRPkvjGc0eZYtitfWsjKM8gvvTqTwt-oXR16qVVmoHuyvpubI3F_MnNbxvvJc-_IEhv9IFtX26iNPsT6i4yMwLFfud1xC0V69UxVDDtrNDA',
+				'source_token': 'Atnr|EwICIGzwlMGLCbgaeVTuPnQQ6hk5xPIkYdiLCqq5MjIgfY0OZpc9_i-aHyoAIcQ7_IRL_w_pJ83uWVcadv45HZpYATCEob2onXv0Cbxgdfrk9VRzlrMEM2GI_c91I73AQ17FqZr0Ozd6SELwbpP-kzXCWAQgO-vEvVCkO0njq-PObdS2Svz3mmHHTUnmRXL2-EPou-OFH_8HPeWYcKMoIoVGQIPAIjKiUZbrb541Y4OwRCd4Q6NQdUIOMCto4260a7PO_Q8iifPwXNs4EYn1t36_tEm7',//Atnr|EwICIJtEEOOORFiLkPtrqkjLQumKMc4Z0kNKAUrKyvsyk03hGRz1S5qF6yL3cYvE-rHccYDQ5JYB7sX6DH-8hkk-0xEoHGFyIrCIzZOvelzrddZqsfLYB7v4qgh8m6_-ggreazs6KF_sevsE1XE8BLto7a50X5JVejntbpqHI_jrGuqzYWdNz4VR-28h9e1QnmRW3oMBRPkvjGc0eZYtitfWsjKM8gvvTqTwt-oXR16qVVmoHuyvpubI3F_MnNbxvvJc-_IEhv9IFtX26iNPsT6i4yMwLFfud1xC0V69UxVDDtrNDA
 				'source_token_type': 'refresh_token',
 				'requested_token_type': 'access_token',
 				'app_name': 'com.amazon.rabbit'

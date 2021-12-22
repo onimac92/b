@@ -30,6 +30,8 @@ var start   = db.ref("start");
 var log     = db.ref("log");
 var ping    = db.ref("ping");
 var timeout = db.ref("timeout");
+var beginBot;
+var endBot;
 
 running.set(false);
 start.set(false);
@@ -94,7 +96,7 @@ bot.registerEvent('acceptOfferFailed', async(offer) => {
 })
 
 bot.registerEvent('overRateDetected', async() => {
-    log.push(`overRateDetected`);
+    log.push(`overRateDetected #${i}: ${moment(beginBot).format("hh:mm:ss")} - ${moment(endBot).format("hh:mm:ss")} | ${moment(new Date()).format("hh:mm:ss")}`);
 })
 
 bot.registerEvent('accessTokenRefreshed', async() => {
@@ -110,18 +112,20 @@ bot.registerEvent('filteredBlock', async(offer) => {
 bot.registerEvent('requestBlock', async(offer, time) => {
     i++;
     ping.set(i);
-    t.push(time);
-    timeout.set(average(t));
+    //t.push(time);
+    //timeout.set(average(t));
 })
 
 bot.registerEvent('started', async() => {
+    beginBot = new Date();
     running.set(true);
-    log.push(`started`);
+    log.push(`started: ${moment(beginBot).format("hh:mm:ss")}`);
 })
 
 bot.registerEvent('stopped', async() => {
+    endBot = new Date();
     running.set(false);
-    log.push(`stopped`);
+    log.push(`stopped: ${moment(endBot).format("hh:mm:ss")}`);
 })
 
 function convertDateToDateOfWeek(date) {
