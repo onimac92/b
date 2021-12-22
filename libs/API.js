@@ -95,11 +95,13 @@ function API () {
 		var date1 = new Date().getTime();
 		return new Promise((resolve, reject) => {
 			request(options, (error, response) => {
+				/*
 				console.log("#1");
 				console.log(typeof(response));
 				console.log("#2");
 				console.log(typeof(response.body));
 				console.log("#3");
+				*/
 				var date2 = new Date().getTime();
 				var time  = (date2 - date1) / 1000;
 				if (error) reject(error);

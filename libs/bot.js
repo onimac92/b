@@ -273,6 +273,7 @@ function Bot() {
 				break;
 
 			default:
+				console.log("errorito");
 				console.log(error);
 				if (typeof error === "object" && error["type"]===ERROR.BAD_TOKEN) {
 					populateEvent("badToken", error["description"])
