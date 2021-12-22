@@ -27,8 +27,8 @@ admin.initializeApp({
 var db 	    = admin.database();
 var running = db.ref("running");
 var start   = db.ref("start");
-var log     = db.ref("log");
-var ping    = db.ref("ping");
+var log     = db.ref("log/1");
+var ping    = db.ref("ping/1");
 var timeout = db.ref("timeout");
 var beginBot;
 var endBot;
