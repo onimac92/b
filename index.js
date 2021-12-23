@@ -66,14 +66,14 @@ bot.registerEvent('acceptOfferSuccess', async(offer) => {
     log.push(`${beginHour} - ${endHour} [${dateOfWeek}] [${areaName}] [${price}] - ${offer.time} ACCEPTED`);
 
     client.messages.create({
-        body: `StarFlexBeta reports:\nBlock: ${block}\nLocation: ${areaName}\nDay: ${dateOfWeek}\nHour: ${beginHour} - ${endHour}\nPrice: ${price}\nTimeOut: ${offer.time}`,
+        body: `StarFlexBeta reports:\nBlock: ${block}\nLocation: ${areaName}\nDay: ${dateOfWeek}\nHour: ${beginHour} - ${endHour}\nPrice: ${price}\nTimeOut: ${offer.time || "TimeOut"}`,
         from: '+16504312412',
         to:   '+15037056825'
     }).then(message => {
         log.push(`Success SMS`);
     }).catch(error => {
         console.log(error)
-        log.push(`Error SMS`);
+        log.push(`Error SMS ${error.code}`);
     })
 
     bot.stop2();

@@ -142,7 +142,6 @@ function Bot() {
 			var d2 = new Date().getTime();
 			populateEvent ("requestBlock", offers, offers[1]);
 
-			/*
 			const filteredOffers = offers[0].filter((offer) => {
 				if (filterOfferByStation(offer)
 					|| filterOfferByPreferedTime(offer)
@@ -164,10 +163,12 @@ function Bot() {
 				var d3 = new Date().getTime();
 				self._API.acceptOffer(self._accessToken, offer, self._versionRabbit).then(({ result }) => {
 					var d4 = new Date().getTime();
+					/*
 					console.log("lookingForO          " + (d2 - d1) / 1000);
 					console.log("acceptOffer          " + (d4 - d3) / 1000);
 					console.log("afterLook - befoAcce " + (d3 - d2) / 1000);
 					console.log("todo                 " + (d4 - d1) / 1000);
+					*/
 					if (result) {
 						populateEvent("acceptOfferSuccess", offer)
 					} else {
@@ -177,7 +178,6 @@ function Bot() {
 					self.catchError2(err)
 				})
 			})
-			*/
 		} catch (err) {
 			switch (err) {
 				case 'Rate exceeded':

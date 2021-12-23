@@ -37,11 +37,12 @@ function API () {
 		return new Promise((resolve, reject) => {
 			request(options, (error, response) => {
 				if (error) reject(error);
+				if (typeof response === 'undefined') response = {};
 				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.serviceAreaIds === 'undefined') response.body.serviceAreaIds = [];
-				resolve("dd00cb2b-349b-480c-a2d0-5aff2c3fd293");
-				//resolve(response.body.serviceAreaIds[0]);
+				//resolve("dd00cb2b-349b-480c-a2d0-5aff2c3fd293");
+				resolve(response.body.serviceAreaIds[0]);
 			});
 		})
 	};
@@ -108,10 +109,11 @@ function API () {
 				var time  = (date2 - date1) / 1000;
 				//console.log(time);
 				if (error) reject(error);
+				if (typeof response === 'undefined') response = {};
 				if (typeof response.body === 'undefined') response.body = {};
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (typeof response.body.offerList === 'undefined') response.body.offerList = [];
-				console.log(`${response.body.offerList.length} - ${time}`);
+				//console.log(`${response.body.offerList.length} - ${time}`);
 				resolve([response.body.offerList, time]);
 			});
 		})
@@ -119,7 +121,7 @@ function API () {
 
 
 	self.acceptOffer = function (accessToken, offer, versionRabbit) {
-		console.log(offer);
+		//console.log(offer);
 
 		var userAgentRabbit = userAgent.replace(/\).*/gi, `) RabbitAndroid/${versionRabbit}`);
 
@@ -148,7 +150,7 @@ function API () {
 				if (response.body.message === 'Rate exceeded') reject(response.body.message);
 				if (response.statusCode === 200) offer["result"] = true;
 				else offer["result"] = false;
-				console.log(response.body);
+				//console.log(response.body);
 				offer.time = (date2 - date1) / 1000;
 				resolve(offer);
 			});
@@ -234,8 +236,8 @@ function API () {
 			'method': 'POST',
 			'url': "https://api.amazon.com/auth/token",
 			'body': {
-				'source_token': 'Atnr|EwICIHSgq8S0r5OCefH6uIvTjG_i0W0m6mo9k1krucfAL282a14VWSElEP3_2UaE7cZZfo5EJJ43iyCok-dQ9kk_FD9-Q5_VBbNFb-bXCjW7QyeQSe9ZDdbqYT4QmOFjcwLtGVodKvubIEtjWH5h8WBj6nyj6sHvqJ9YUZoygNQTwSTrtTjj6ntowHIpZ4jzcjrezRPRnYS6YE-aZ0zWPcA6i8P9GbANXBObyTBUMqdmFJ0ccXUz4W6RCfXYfesqklAYsH1spbKvdXN9ZjyNK07AkMttoyENAB7BBATUFPgI-t7q2g',//david
-				//'source_token': 'Atnr|EwICIJtEEOOORFiLkPtrqkjLQumKMc4Z0kNKAUrKyvsyk03hGRz1S5qF6yL3cYvE-rHccYDQ5JYB7sX6DH-8hkk-0xEoHGFyIrCIzZOvelzrddZqsfLYB7v4qgh8m6_-ggreazs6KF_sevsE1XE8BLto7a50X5JVejntbpqHI_jrGuqzYWdNz4VR-28h9e1QnmRW3oMBRPkvjGc0eZYtitfWsjKM8gvvTqTwt-oXR16qVVmoHuyvpubI3F_MnNbxvvJc-_IEhv9IFtX26iNPsT6i4yMwLFfud1xC0V69UxVDDtrNDA',//ber
+				//'source_token': 'Atnr|EwICIHSgq8S0r5OCefH6uIvTjG_i0W0m6mo9k1krucfAL282a14VWSElEP3_2UaE7cZZfo5EJJ43iyCok-dQ9kk_FD9-Q5_VBbNFb-bXCjW7QyeQSe9ZDdbqYT4QmOFjcwLtGVodKvubIEtjWH5h8WBj6nyj6sHvqJ9YUZoygNQTwSTrtTjj6ntowHIpZ4jzcjrezRPRnYS6YE-aZ0zWPcA6i8P9GbANXBObyTBUMqdmFJ0ccXUz4W6RCfXYfesqklAYsH1spbKvdXN9ZjyNK07AkMttoyENAB7BBATUFPgI-t7q2g',//david
+				'source_token': 'Atnr|EwICIJtEEOOORFiLkPtrqkjLQumKMc4Z0kNKAUrKyvsyk03hGRz1S5qF6yL3cYvE-rHccYDQ5JYB7sX6DH-8hkk-0xEoHGFyIrCIzZOvelzrddZqsfLYB7v4qgh8m6_-ggreazs6KF_sevsE1XE8BLto7a50X5JVejntbpqHI_jrGuqzYWdNz4VR-28h9e1QnmRW3oMBRPkvjGc0eZYtitfWsjKM8gvvTqTwt-oXR16qVVmoHuyvpubI3F_MnNbxvvJc-_IEhv9IFtX26iNPsT6i4yMwLFfud1xC0V69UxVDDtrNDA',//ber
 				//'source_token': 'Atnr|EwICIGzwlMGLCbgaeVTuPnQQ6hk5xPIkYdiLCqq5MjIgfY0OZpc9_i-aHyoAIcQ7_IRL_w_pJ83uWVcadv45HZpYATCEob2onXv0Cbxgdfrk9VRzlrMEM2GI_c91I73AQ17FqZr0Ozd6SELwbpP-kzXCWAQgO-vEvVCkO0njq-PObdS2Svz3mmHHTUnmRXL2-EPou-OFH_8HPeWYcKMoIoVGQIPAIjKiUZbrb541Y4OwRCd4Q6NQdUIOMCto4260a7PO_Q8iifPwXNs4EYn1t36_tEm7',//juan
 				'source_token_type': 'refresh_token',
 				'requested_token_type': 'access_token',
